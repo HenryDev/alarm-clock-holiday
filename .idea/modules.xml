@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/alarm_clock_holiday.iml" filepath="$PROJECT_DIR$/alarm_clock_holiday.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/alarm_clock_holiday_android.iml" filepath="$PROJECT_DIR$/android/alarm_clock_holiday_android.iml" />
+    </modules>
+  </component>
+</project>
