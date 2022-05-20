@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Map<String, dynamic>> _items = List.generate(
-      10,
+      5,
       (index) => {
             'id': index,
             'title': 'Item $index',
@@ -38,7 +38,15 @@ class _MyHomePageState extends State<MyHomePage> {
           });
 
   void _incrementCounter() {
-    setState(() {});
+    setState(() {
+      Map<String, dynamic> item = {
+        'id': 6,
+        'title': 'Item 6',
+        'description': 'This is the description of the item 6. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        'isExpanded': false
+      };
+      _items.add(item);
+    });
   }
 
   @override
