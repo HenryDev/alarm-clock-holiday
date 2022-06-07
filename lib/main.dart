@@ -1,3 +1,4 @@
+import 'package:alarm_clock_holiday/local_storage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,14 +14,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Alarm Clock Holiday'),
+      home: MyHomePage(title: 'Alarm Clock Holiday', storage: LocalStorage()),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.storage});
 
+  final LocalStorage storage;
   final String title;
 
   @override
