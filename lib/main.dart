@@ -1,3 +1,4 @@
+import 'package:alarm_clock_holiday/alarm.dart';
 import 'package:alarm_clock_holiday/local_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -30,25 +31,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Map<String, dynamic>> _items = List.generate(
-      5,
-      (index) => {
-            'id': index,
-            'title': 'Item $index',
-            'description': 'This is the description of the item $index. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-            'isExpanded': false
-          });
+  final List<Alarm> _alarms = List.generate(5, (index) => Alarm(DateTime.now().add(Duration(hours: index)), false));
 
   void _incrementCounter() {
-    setState(() {
-      Map<String, dynamic> item = {
-        'id': 6,
-        'title': 'Item 6',
-        'description': 'This is the description of the item 6. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        'isExpanded': false
-      };
-      _items.add(item);
-    });
+    setState(() {});
   }
 
   @override
@@ -69,22 +55,23 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             ExpansionPanelList(
-              children: _items
+              children: _alarms
                   .map(
-                    (item) => ExpansionPanel(
-                        canTapOnHeader: true,
-                        backgroundColor: item['isExpanded'] ? const Color.fromARGB(255, 242, 242, 242) : Colors.white,
-                        headerBuilder: (context, isExpanded) {
-                          return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                            child: Text(item['title'], style: const TextStyle(fontSize: 20)),
-                          );
-                        },
-                        body: Container(
+                    (alarm) => ExpansionPanel(
+                      canTapOnHeader: true,
+                      backgroundColor: alarm.isExpanded ? const Color.fromARGB(255, 242, 242, 242) : Colors.white,
+                      headerBuilder: (context, isExpanded) {
+                        return Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                          child: Text(item['description']),
-                        ),
-                        isExpanded: item['isExpanded']),
+                          child: Text(alarm.dateTime.toString(), style: const TextStyle(fontSize: 20)),
+                        );
+                      },
+                      body: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Text(alarm.dateTime.toString()),
+                      ),
+                      isExpanded: alarm.isExpanded,
+                    ),
                   )
                   .toList(),
               expansionCallback: toggleExpansion,
@@ -100,9 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void toggleExpansion(panelIndex, isExpanded) {
+  void toggleExpansion(index, isExpanded) {
     setState(() {
-      _items[panelIndex]['isExpanded'] = !isExpanded;
+      _alarms[index].isExpanded = !isExpanded;
     });
   }
 }
