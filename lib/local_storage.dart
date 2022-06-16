@@ -20,8 +20,9 @@ class LocalStorage {
     return await file.readAsLines();
   }
 
-  Future<File> writeFile(Alarm alarm) async {
+  Future<File> writeFile(List<Alarm> alarms) async {
     final file = await _localFile;
-    return file.writeAsString(alarm.toString());
+    String content = alarms.map((alarm) => alarm.dateTime).toList().toString();
+    return file.writeAsString(content);
   }
 }

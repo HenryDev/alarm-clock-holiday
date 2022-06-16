@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:alarm_clock_holiday/alarm.dart';
 import 'package:alarm_clock_holiday/local_storage.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +33,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Alarm> _alarms = List.generate(5, (index) => Alarm(DateTime.now().add(Duration(hours: index)), false));
+  List<Alarm> _alarms = [];
 
-  void _incrementCounter() {
-    setState(() {});
+  @override
+  void initState() {
+    super.initState();
+    widget.storage.readFile().then((List<String> lines) {
+      setState(() {
+        _alarms = lines.map((line) => Alarm(DateTime.parse(line), false)).toList();
+      });
+    });
   }
 
   @override
@@ -80,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.large(
-        onPressed: _incrementCounter,
+        onPressed: _addAlarm,
         tooltip: 'Add new alarm',
         child: const Icon(Icons.add),
       ),
@@ -91,5 +99,12 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _alarms[index].isExpanded = !isExpanded;
     });
+  }
+
+  Future<File> _addAlarm() {
+    setState(() {
+      _alarms.add(Alarm(DateTime.now(), true));
+    });
+    return widget.storage.writeFile(_alarms);
   }
 }
