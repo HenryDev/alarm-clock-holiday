@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:alarm_clock_holiday/alarm.dart';
@@ -38,9 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    widget.storage.readFile().then((List<String> lines) {
+    widget.storage.readFile().then((content) {
       setState(() {
-        _alarms = lines.map((line) => Alarm(DateTime.parse(line), false)).toList();
+        _alarms = jsonDecode(content);
       });
     });
   }
