@@ -7,17 +7,22 @@ import 'alarm.dart';
 
 class LocalStorage {
   Future<String> get _localPath async {
-    var directory = await getApplicationDocumentsDirectory();
+    Directory directory = await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
   Future<File> get _localFile async {
-    final path = await _localPath;
-    return File('$path/alarms.txt');
+    final String path = await _localPath;
+    var file = File('$path/alarms.txt');
+    if (file.existsSync()) {
+      return file;
+    } else {
+      return file.create();
+    }
   }
 
   Future<String> readFile() async {
-    final file = await _localFile;
+    final File file = await _localFile;
     return await file.readAsString();
   }
 

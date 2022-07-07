@@ -39,9 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    widget.storage.readFile().then((content) {
+    widget.storage.readFile().then((String content) {
       setState(() {
-        _alarms = jsonDecode(content);
+        _alarms = createAlarms(content);
       });
     });
   }
@@ -108,4 +108,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     return widget.storage.writeFile(_alarms);
   }
+}
+
+String convertAlarmsToText(List<Alarm> alarms) {
+  return jsonEncode(alarms);
+}
+
+List<Alarm> createAlarms(String content) {
+  return [];
 }
