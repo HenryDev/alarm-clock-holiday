@@ -111,9 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 String convertAlarmsToText(List<Alarm> alarms) {
-  return jsonEncode(alarms);
+  return jsonEncode(alarms, toEncodable: encodeAlarm);
 }
 
 List<Alarm> createAlarms(String content) {
-  return [];
+  return jsonDecode(content);
+}
+
+Object? encodeAlarm(Object? value) {
+  return value is Alarm ? Alarm.toJson(value) : throw UnsupportedError('Cannot convert to JSON: $value');
 }
