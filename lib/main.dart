@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     widget.storage.readFile().then((String content) {
       setState(() {
-        _alarms = createAlarms(content);
+        _alarms = content.isEmpty ? [] : createAlarms(content);
       });
     });
   }
@@ -106,7 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _alarms.add(Alarm(DateTime.now(), true));
     });
-    return widget.storage.writeFile(_alarms);
+    String content = convertAlarmsToText(_alarms);
+    return widget.storage.writeFile(content);
   }
 }
 

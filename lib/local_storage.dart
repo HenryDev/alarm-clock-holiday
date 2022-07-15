@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-
-import 'alarm.dart';
 
 class LocalStorage {
   Future<String> get _localPath async {
@@ -26,9 +23,8 @@ class LocalStorage {
     return await file.readAsString();
   }
 
-  Future<File> writeFile(List<Alarm> alarms) async {
+  Future<File> writeFile(String content) async {
     final file = await _localFile;
-    String content = jsonEncode(alarms);
     return file.writeAsString(content, mode: FileMode.append, flush: true);
   }
 }
