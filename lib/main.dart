@@ -115,7 +115,12 @@ String convertAlarmsToText(List<Alarm> alarms) {
 }
 
 List<Alarm> createAlarms(String content) {
-  return jsonDecode(content);
+  List<dynamic> jsonAlarms = jsonDecode(content);
+  List<Alarm> map = jsonAlarms.map((alarm) {
+    var dateTime = DateTime.parse(alarm['dateTime']);
+    return Alarm(dateTime, alarm['isExpanded']);
+  }).toList();
+  return map;
 }
 
 Object? encodeAlarm(Object? value) {

@@ -8,11 +8,12 @@ void main() {
   var alarms = [Alarm(DateTime.parse(date), false), Alarm(DateTime.parse(date1), false)];
   var jsonAlarms = '[{"dateTime":"$date","isExpanded":false},{"dateTime":"$date1","isExpanded":false}]';
   test('createAlarms should create alarms from string', () {
-    var result = createAlarms(jsonAlarms);
-    expect(result, equals(alarms));
+    List<Alarm> result = createAlarms(jsonAlarms);
+    expect(result[0].dateTime, equals(alarms[0].dateTime));
+    expect(result[1].dateTime, equals(alarms[1].dateTime));
   });
   test('convertAlarmsToText should serialize alarms', () {
-    var result = convertAlarmsToText(alarms);
+    String result = convertAlarmsToText(alarms);
     expect(result, equals(jsonAlarms));
   });
 }
